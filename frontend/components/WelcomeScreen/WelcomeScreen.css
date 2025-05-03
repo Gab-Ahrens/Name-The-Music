@@ -1,0 +1,48 @@
+.welcome-screen {
+  text-align: center;
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-xl);
+}
+
+.welcome-screen .title {
+  font-family: var(--font-accent);
+  font-size: var(--font-size-xxl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-screen .instructions {
+  margin-bottom: var(--spacing-xl);
+}
+
+.welcome-screen .instructions p {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.welcome-screen .instructions ul {
+  list-style-position: inside;
+  text-align: left;
+  margin: var(--spacing-md) auto;
+  max-width: 80%;
+}
+
+.welcome-screen .instructions li {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-md);
+}
+
+.welcome-screen .start-btn {
+  font-size: var(--font-size-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
+  transition: all var(--transition-medium);
+}
+
+.welcome-screen .start-btn:hover {
+  transform: scale(1.05);
+} 
