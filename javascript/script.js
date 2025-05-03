@@ -15,6 +15,8 @@ const acertouAmbas = document.getElementById('acertou-ambas');
 const contaRodadas = document.getElementById('contarodadas');
 const pontosFinal = document.getElementById('pointsfinal')
 const finalText = document.getElementById('fimtxt');
+let currentAudio = null;
+let isPlaying = false;
 
 
 // Botões
@@ -36,8 +38,29 @@ function iniciarJogo() { // vai dar inicio ao jogo, faz o botão 'Começar' desa
 
 
 function escutarMusica() {
-    let audio = new Audio(musicPlayer.playSong(musicPlayer.rodada));
-    audio.play(); 
+    if (currentAudio && !currentAudio.paused) {
+        // If audio is playing, pause it
+        currentAudio.pause();
+        isPlaying = false;
+        ouvirButton.innerHTML = '<img id="playbtn" src="./assets/images/playbtn.png"> Aperte para ouvir a música!';
+    } else {
+        // If no audio is playing or it's paused, play it
+        if (currentAudio) {
+            // Resume the current audio if it exists
+            currentAudio.play();
+        } else {
+            // Create new audio if none exists
+            currentAudio = new Audio(musicPlayer.playSong(musicPlayer.rodada));
+            // Add event listener to handle when audio ends naturally
+            currentAudio.addEventListener('ended', function() {
+                isPlaying = false;
+                ouvirButton.innerHTML = '<img id="playbtn" src="./assets/images/playbtn.png"> Aperte para ouvir a música!';
+            });
+            currentAudio.play();
+        }
+        isPlaying = true;
+        ouvirButton.innerHTML = '<img id="playbtn" src="./assets/images/playbtn.png"> Pausar música';
+    }
 }
 
 function enviarResposta() {
@@ -59,6 +82,14 @@ function enviarResposta() {
 }
 
 function proximaPergunta() {
+    // Stop current audio if playing
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+        isPlaying = false;
+        ouvirButton.innerHTML = '<img id="playbtn" src="./assets/images/playbtn.png"> Aperte para ouvir a música!';
+    }
+    
     musicPlayer.rodada++;
     respostaTitle.value = "";
     respostaPerformer.value = "";
@@ -75,6 +106,12 @@ function proximaPergunta() {
 
 
 function gameOver() {
+    // Stop any playing audio
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+    }
+    
     jogoMain.classList.add('hide');
     enviarButton.classList.add('hide');
     finalText.classList.remove('hide');
